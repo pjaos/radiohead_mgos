@@ -1,0 +1,3 @@
+[submodule "RadioHead"]
+	path = RadioHead
+	url = git@github.com:pjaos/RadioHead.git

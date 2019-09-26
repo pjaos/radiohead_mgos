@@ -1,0 +1,48 @@
+author: mongoose-os
+description: A Mongoose OS app skeleton
+version: 1.0
+
+libs_version: ${mos.version}
+modules_version: ${mos.version}
+mongoose_os_version: ${mos.version}
+
+# Optional. List of tags for online search.
+tags:
+  - c
+  - ../../RadioHead/
+  - ../../RadioHead/MGOSCompat
+
+# List of files / directories with C sources. No slashes at the end of dir names.
+sources:
+  - src
+  - ../../RadioHead/
+  - ../../RadioHead/MGOSCompat
+
+# List of dirs. Files from these dirs will be copied to the device filesystem
+#filesystem:
+#  - fs
+
+config_schema:
+ - ["rh_serial",              "o",             {title: "Holds serial port parameters for the RadioHead library to communicate with serial radio device."}]
+ - ["rh_serial.baud",         "i", 9600,       {title: "The serial baud rate in bits per second."}]
+ - ["rh_serial.databits",     "i", 8,          {title: "The serial data bits (5,6,7 or 8)."}]
+ - ["rh_serial.parity",       "i", 0,          {title: "The serial parity (0 = None, 1 = Even, 2 = Odd)."}]
+ - ["rh_serial.stopbits",     "i", 1,          {title: "The serial stop bits (1 = 1, 2 =2, 3 = 1.5)."}]
+
+#Define the serial port that the radio is connected to.
+cdefs:
+  RH_SERIAL_PORT: 1
+  NO_ESP32_RXD_PULLUP: 1     #Remove pull up from serial RX data line as this may pull the STRX882 radio output.
+
+libs:
+ - origin: https://github.com/mongoose-os-libs/boards
+ - origin: https://github.com/mongoose-os-libs/ca-bundle
+ - origin: https://github.com/mongoose-os-libs/rpc-service-config
+ - origin: https://github.com/mongoose-os-libs/rpc-service-fs
+ - origin: https://github.com/mongoose-os-libs/rpc-uart
+ - origin: https://github.com/mongoose-os-libs/spi
+ - origin: https://github.com/mongoose-os-libs/adc
+ - origin: https://github.com/mongoose-os-libs/pwm
+
+# Used by the mos tool to catch mos binaries incompatible with this file format
+manifest_version: 2017-09-29

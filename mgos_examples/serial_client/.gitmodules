@@ -1,0 +1,3 @@
+[submodule "src/RadioHead"]
+	path = src/RadioHead
+	url = https://github.com/PaulStoffregen/RadioHead.git
