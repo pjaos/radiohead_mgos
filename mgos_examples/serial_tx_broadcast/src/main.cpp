@@ -8,7 +8,7 @@ extern "C" {
 
 #define CLIENT_ADDRESS 1
 #define SERVER_ADDRESS 255 //Broadcast address
-#define BROADCAST_PERIOD_MS 250
+#define BROADCAST_PERIOD_MS 1000
 
 //uint8_t data[] = "U";
 uint8_t data[] = "Hello World!";
@@ -29,27 +29,6 @@ static void tx_broadcast_poll_timer_cb(void *arg) {
   manager->sendtoWait(data, sizeof(data), SERVER_ADDRESS);
 
   (void) arg;
-}
-
-/**
- * @brief A timer callback to receive broadcast messages.
- * @param arg Arguments passed to the callback (Null in this case).
- */
-static void rx_broadcast_poll_timer_cb(void *arg) {
-    uint8_t from, to, id, flags, rx_byte_count;
-    RHReliableDatagram *manager = (RHReliableDatagram *)arg;
-
-    if (manager->recvfrom(rx_buf, &rx_byte_count, &from, &to, &id, &flags)) // Discards the message
-    {
-        LOG(LL_INFO, ("%s: Client RX",__FUNCTION__) );
-        LOG(LL_INFO, ("from:  %02x",from) );
-        LOG(LL_INFO, ("to:    %02x",to) );
-        LOG(LL_INFO, ("id:    %02x",id) );
-        LOG(LL_INFO, ("flags: %02x",flags) );
-        LOG(LL_INFO, ("rx_buf:%s",(char*)rx_buf) );
-    }
-
-    (void) arg;
 }
 
 //Instantiate the serial driver instance
@@ -78,7 +57,6 @@ static int setup()
 
 enum mgos_app_init_result mgos_app_init(void) {
     if( !setup() ) {
-        mgos_set_timer(BROADCAST_PERIOD_MS/2, MGOS_TIMER_REPEAT, rx_broadcast_poll_timer_cb, (void*)&manager);
         mgos_set_timer(BROADCAST_PERIOD_MS, MGOS_TIMER_REPEAT, tx_broadcast_poll_timer_cb, (void*)&manager);
     }
     else {
