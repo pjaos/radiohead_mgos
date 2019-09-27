@@ -9,8 +9,6 @@ mongoose_os_version: ${mos.version}
 # Optional. List of tags for online search.
 tags:
   - c
-  - ../../RadioHead/
-  - ../../RadioHead/MGOSCompat
 
 # List of files / directories with C sources. No slashes at the end of dir names.
 sources:
