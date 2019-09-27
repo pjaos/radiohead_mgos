@@ -63,4 +63,4 @@ main.cpp:30             rx_buf:Hello World!
  
  Uart 1 (only the TXD line is available and is normally used for debug output)
  TX  = GPIO2
-'''
+```
