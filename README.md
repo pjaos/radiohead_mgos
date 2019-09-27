@@ -1,4 +1,4 @@
-# Using the RadioHead library Mongoose OS
+# Using the RadioHead library with Mongoose OS
 
 ## Overview
 The RadioHead packet radio library for embedded processors supports many low cost radio devices.
