@@ -11,11 +11,11 @@ of the RadioHead library used in conjunction with Mongoose OS.
  
  Before compiling the examples you'll need to install the mos tool as detailed at https://mongoose-os.com/docs/mongoose-os/quickstart/setup.md.
  
- The mgos_examples folder contains subfolders each of which contains a working example, each of which contain a README.md file providing more information. These example code folders are derived from the RadioHead/examples folder. Therefore if no example exists in mgos_examples check the RadioHead/examples folder and you may find example code that will help you generate a new example in mgos_examples. If you create new mgos_examples please raise a github pull request to add your example so that others may benefit from your efforts. If providing a new example please provide details of the testing of your contribution.
+ Under the mgos__examples folder you will example folders (E.G serial_port/serial_tx_broadcast). These contain working examples each of which contain a README.md file providing more information. These example code folders are derived from the RadioHead/examples folder. Therefore if no example exists in mgos_examples check the RadioHead/examples folder and you may find example code that will help you generate a new example under mgos__examples. If you create new examples please raise a github pull request to add your example so that others may benefit from your efforts.
 
 ## Acknowledgements
   Many thanks to airspayce and all contributors to the RadioHead library (http://www.airspayce.com/mikem/arduino/RadioHead/).
 
   Many thanks to Cesanta and all the contibutors to the Mongoose OS IoT firmware development framework (https://mongoose-os.com).
 
-Please note that both of the above have Open Source and Commercial Licenses. 
+Please note that both of the above have Open Source and Commercial Licenses.
