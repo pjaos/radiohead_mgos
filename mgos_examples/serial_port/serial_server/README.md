@@ -29,8 +29,11 @@ got request from : 0x01: Hello World!
 got request from : 0x01: Hello World!
 ```
 
+## Radio Hardware
+[STX882](../hardware/STX882_High-power_ASK_Transmitter_Module.pdf) and [SRX882](../hardware/SRX882_Micropower_superheterodyne_receiver_V2.1.pdf) (TX/RX modules) were used with this example code for testing.
+
 ## Serial Ports
- The same naming convention is used here to refer to Uarts and srial ports (Serial Port 0 = Uart 0, Serial port 1 = Uart 1, etc).
+ The same naming convention is used here to refer to Uarts and serial ports (Serial Port 0 = Uart 0, Serial port 1 = Uart 1, etc).
 
  The ESP32 has the following serial ports available.
 

@@ -13,8 +13,8 @@ tags:
 # List of files / directories with C sources. No slashes at the end of dir names.
 sources:
   - src
-  - ../../RadioHead/
-  - ../../RadioHead/MGOSCompat
+  - ../../../RadioHead/
+  - ../../../RadioHead/MGOSCompat
 
 # List of dirs. Files from these dirs will be copied to the device filesystem
 #filesystem:

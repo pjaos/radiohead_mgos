@@ -1,7 +1,7 @@
-## Serial RX Broadcast Example
+## Serial TX Broadcast Example
 
 ## Description
-A RadioHead broadcast message is received using a radio attached to a serial port using Mongoose OS. This should be used along with another device running the [serial_tx_broadcast](../serial_tx_broadcast/README.md) example.
+A RadioHead broadcast message is sent using a radio attached to a serial port using Mongoose OS. This should be used along with another device running the [serial_rx_broadcast](../serial_rx_broadcast/README.md) example.
 
 ## Building
 Run the build scripts to build the code ('./build_esp32.sh clean' or './build_esp8266.sh clean') after installing the required software as detailed in the README.md file in the parent folder. Mongoose OS support other processors and the code may work for these but only ESP32 and ESP8266 examples have been tested.
@@ -29,9 +29,11 @@ main.cpp:29             flags: 00
 main.cpp:30             rx_buf:Hello World!
 ```
 
+## Radio Hardware
+[STX882](../hardware/STX882_High-power_ASK_Transmitter_Module.pdf) and [SRX882](../hardware/SRX882_Micropower_superheterodyne_receiver_V2.1.pdf) (TX/RX modules) were used with this example code for testing.
 
 ## Serial Ports
- The same naming convention is used here to refer to Uarts and srial ports (Serial Port 0 = Uart 0, Serial port 1 = Uart 1, etc).
+ The same naming convention is used here to refer to Uarts and serial ports (Serial Port 0 = Uart 0, Serial port 1 = Uart 1, etc).
 
  The ESP32 has the following serial ports available.
 
