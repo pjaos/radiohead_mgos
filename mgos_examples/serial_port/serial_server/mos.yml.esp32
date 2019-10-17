@@ -12,15 +12,16 @@ tags:
 
 # List of files / directories with C sources. No slashes at the end of dir names.
 sources:
-  - src
-  - ../../../RadioHead/
-  - ../../../RadioHead/MGOSCompat
+ - src
+ - ../../../RadioHead/
+ - ../../../RadioHead/MGOSCompat
 
 # List of dirs. Files from these dirs will be copied to the device filesystem
 #filesystem:
 #  - fs
 
 config_schema:
+#The serial port settings
  - ["rh_serial",              "o",             {title: "Holds serial port parameters for the RadioHead library to communicate with serial radio device."}]
  - ["rh_serial.baud",         "i", 9600,       {title: "The serial baud rate in bits per second."}]
  - ["rh_serial.databits",     "i", 8,          {title: "The serial data bits (5,6,7 or 8)."}]

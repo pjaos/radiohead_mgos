@@ -4,26 +4,24 @@
 
 extern "C" {
     enum mgos_app_init_result mgos_app_init(void);
+    static void rx_msg_cb(void *arg);
 }
 
-#define CLIENT_ADDRESS 1
 #define SERVER_ADDRESS 2
-//#define SERVER_ADDRESS 255 //Broadcast address
 
-#define MSG_POLL_PERIOD_MS 1000
-#define MEM_USAGE_PERIOD_MS 2500
+#define BROADCAST_PERIOD_MS 1000
+#define MSG_POLL_PERIOD_MS BROADCAST_PERIOD_MS/4
 
+//!!! Dont put these on the stack:
 uint8_t data[] = "And hello back to you";
-// Dont put this on the stack:
 uint8_t buf[RH_SERIAL_MAX_MESSAGE_LEN];
 
 /**
  * @brief A timer callback (called every MSG_POLL_PERIOD_MS) to check for
  * message from a client and send a response back.
- * @param arg Arguments passed to the callback (Null in this case).
+ * @param arg Arguments passed to the callback, a RHReliableDatagram instance.
  */
-static void uart_dispatcher(int uart_no, void *arg) {
-//static void rh_server_msg_cb(void *arg) {
+static void rx_msg_cb(void *arg) {
 
   RHReliableDatagram *manager = (RHReliableDatagram *)arg;
 
@@ -48,40 +46,16 @@ static void uart_dispatcher(int uart_no, void *arg) {
 
       }
   }
-
-  (void) uart_no;
-  (void) arg;
-}
-
-
-//Instantiate the serial driver instance
-RH_Serial driver(Serial);
-
-//Instantiate a manager instance.
-RHReliableDatagram manager(driver, SERVER_ADDRESS);
-
-/**
- * @brief Setup the RH driver and manager.
- * @return 0 = no error, -1 = error.
- */
-static int setup()
-{
-  int returnCode = 0;
-
-  // Configure the port RH_Serial will use:
-  Serial.begin( mgos_sys_config_get_rh_serial_baud() );
-
-  if (!manager.init()) {
-      returnCode = -1;
-  }
-
-  return returnCode;
 }
 
 enum mgos_app_init_result mgos_app_init(void) {
+    static RH_Serial driver(Serial);
+    static RHReliableDatagram manager(driver, SERVER_ADDRESS);
 
-    if( !setup() ) {
-        mgos_uart_set_dispatcher(RH_SERIAL_PORT, uart_dispatcher, (void*)&manager);
+    Serial.begin( mgos_sys_config_get_rh_serial_baud() );
+
+    if( manager.init() ) {
+        mgos_set_timer(MSG_POLL_PERIOD_MS, MGOS_TIMER_REPEAT, rx_msg_cb, (void*)&manager);
     }
     else {
         Serial.println("init failed");
