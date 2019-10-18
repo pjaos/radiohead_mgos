@@ -4,7 +4,7 @@
 A RadioHead message is received (by this server) using a radio attached to a serial port using Mongoose OS. This should be used along with another device running the [serial_client](../serial_client/README.md) example.
 
 ## Building
-Run the build scripts to build the code ('./build_esp32.sh clean' or './build_esp8266.sh clean') after installing the required software as detailed in the README.md file in the parent folder. Mongoose OS support other processors and the code may work for these but only ESP32 and ESP8266 examples have been tested.
+Run the build scripts to build the code ('./build_esp32.sh clean' or './build_esp8266.sh clean') after installing the required software as detailed in the README.md file in the parent folder. Mongoose OS supports other processors and the code may work for these but only ESP32 and ESP8266 examples have been tested.
 
 ## Testing
 This was tested with STX882/STRX882 radio modules connected to an ESP32 device and separate STX882/STRX882 radio modules connected to an ESP8266 device. Note that the radio is connected to the ESP32 device on Uart 1 and connected to the ESP8266 device on Uart 0. Uart 0 on the ESP32 device sends out debug data (shown below). Uart 1 on the ESP8266 device sends out debug data (also shown below).
