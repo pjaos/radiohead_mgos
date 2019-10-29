@@ -32,7 +32,7 @@ config_schema:
  - ["rh_spi",                 "o",             {title: "Holds the RadioHead SPI config."}]
  - ["rh_spi.cs",              "i", 0,          {title: "The RadioHead SPI chip select (0, 1 or 2)."}]
  #The pins specific to NRF chip control
- - ["rh_nrf",                 "o",             {title: "Holds the RadioHead SPI config."}]
+ - ["rh_nrf",                 "o",             {title: "Holds the RadioHead nRF device config."}]
  - ["rh_nrf.trx_chip_enable", "i", 16,         {title: "The TRX_CE pin of the NRF device."}]
  - ["rh_nrf.tx_enable",       "i", 4,          {title: "The TX_EN pin of the NRF device."}]
  #The serial port settings
@@ -42,10 +42,9 @@ config_schema:
  - ["rh_serial.parity",       "i", 0,          {title: "The serial parity (0 = None, 1 = Even, 2 = Odd)."}]
  - ["rh_serial.stopbits",     "i", 1,          {title: "The serial stop bits (1 = 1, 2 =2, 3 = 1.5)."}]
 
-#Define the serial port that the radio is connected to.
 cdefs:
-  RH_SERIAL_PORT: 1
-  NO_ESP32_RXD_PULLUP: 1     #Remove pull up from serial RX data line as this may pull the STRX882 radio output.
+  RH_SERIAL_PORT: 1      #The debug serial port (E.G Serial.println("A message")
+  NO_ESP32_RXD_PULLUP: 1 #Remove pull up from serial RX data line.
   RH_USE_SPI: 1
 
 libs:

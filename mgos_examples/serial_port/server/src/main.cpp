@@ -1,37 +1,36 @@
 #include "mgos.h"
 #include <RHReliableDatagram.h>
 #include <RH_Serial.h>
-#include <RH_NRF905.h>
 
 extern "C" {
     enum mgos_app_init_result mgos_app_init(void);
-    IRAM static void receive_msg_cb(void * pvParameters);
+    static void rx_msg_cb(void *arg);
 }
 
-#define CLIENT_ADDRESS 1
 #define SERVER_ADDRESS 2
 
 #define BROADCAST_PERIOD_MS 1000
-#define MSG_POLL_PERIOD_MS BROADCAST_PERIOD_MS/2
+#define MSG_POLL_PERIOD_MS BROADCAST_PERIOD_MS/4
 
-//!!! Don't put these buffers on the stack:
+//!!! Dont put these on the stack:
 uint8_t data[] = "And hello back to you";
 uint8_t buf[RH_SERIAL_MAX_MESSAGE_LEN];
 
 /**
  * @brief A timer callback (called every MSG_POLL_PERIOD_MS) to check for
  * message from a client and send a response back.
- * @param arg Arguments passed to the callback (Null in this case).
+ * @param arg Arguments passed to the callback, a RHReliableDatagram instance.
  */
-IRAM static void receive_msg_cb(void * pvParameters)
-{
-  RHReliableDatagram *manager = (RHReliableDatagram *)pvParameters;
+static void rx_msg_cb(void *arg) {
+
+  RHReliableDatagram *manager = (RHReliableDatagram *)arg;
 
   if( !manager ) {
       return;
   }
 
   if( manager->available() > 0 ) {
+
       uint8_t len = sizeof(buf);
       uint8_t from;
       if (manager->recvfromAck(buf, &len, &from)) {
@@ -39,7 +38,7 @@ IRAM static void receive_msg_cb(void * pvParameters)
 
         // Send a reply back to the originator client
         if (!manager->sendtoWait(data, sizeof(data), from)) {
-            LOG(LL_INFO, ("%s: send reply to id=%d failed",__FUNCTION__, from) );
+            LOG(LL_INFO, ("sendtoWait failed") );
         }
 
       }
@@ -47,14 +46,13 @@ IRAM static void receive_msg_cb(void * pvParameters)
 }
 
 enum mgos_app_init_result mgos_app_init(void) {
-    static RH_NRF905 driver(mgos_sys_config_get_rh_nrf_trx_chip_enable(),
-                     mgos_sys_config_get_rh_nrf_tx_enable(),
-                     SPI.getCSGpio(),
-                     hardware_spi);
+    static RH_Serial driver(Serial);
     static RHReliableDatagram manager(driver, SERVER_ADDRESS);
 
+    Serial.begin( mgos_sys_config_get_rh_serial_baud() );
+
     if( manager.init() ) {
-        mgos_set_timer(MSG_POLL_PERIOD_MS, MGOS_TIMER_REPEAT, receive_msg_cb, (void*)&manager);
+        mgos_set_timer(MSG_POLL_PERIOD_MS, MGOS_TIMER_REPEAT, rx_msg_cb, (void*)&manager);
     }
     else {
         LOG(LL_INFO, ("init failed") );

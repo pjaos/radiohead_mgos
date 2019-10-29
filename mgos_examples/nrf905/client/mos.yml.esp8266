@@ -31,7 +31,7 @@ config_schema:
  - ["rh_spi",                 "o",             {title: "Holds the RadioHead SPI config."}]
  - ["rh_spi.cs",              "i", 0,          {title: "The RadioHead SPI chip select (0, 1 or 2)."}]
  #The pins specific to NRF chip control
- - ["rh_nrf",                 "o",             {title: "Holds the RadioHead SPI config."}]
+ - ["rh_nrf",                 "o",             {title: "Holds the RadioHead nRF device config."}]
  - ["rh_nrf.trx_chip_enable", "i", 16,         {title: "The TRX_CE pin of the NRF device."}]
  - ["rh_nrf.tx_enable",       "i", 4,          {title: "The TX_EN pin of the NRF device."}]
  #The serial port settings
@@ -51,9 +51,8 @@ libs:
  - origin: https://github.com/mongoose-os-libs/adc
  - origin: https://github.com/mongoose-os-libs/pwm
 
-#Define the serial port that the radio is connected to.
 cdefs:
-  RH_SERIAL_PORT: 0
+  RH_SERIAL_PORT: 0 #The debug serial port (E.G Serial.println("A message")
   RH_USE_SPI: 1
   
 # Used by the mos tool to catch mos binaries incompatible with this file format

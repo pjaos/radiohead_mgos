@@ -2,7 +2,7 @@
 #include "mgos_spi.h"
 #include <RHReliableDatagram.h>
 #include <RH_Serial.h>
-#include <RH_NRF905.h>
+#include <RH_CC110.h>
 
 extern "C" {
     enum mgos_app_init_result mgos_app_init(void);
@@ -14,6 +14,8 @@ extern "C" {
 #define BROADCAST_PERIOD_MS 1000
 
 uint8_t data[] = "Hello World!";
+
+uint8_t txCount=0;
 
 /**
  * @brief A timer callback to send the broadcast message.
@@ -30,13 +32,16 @@ static void tx_broadcast_cb(void *arg) {
 }
 
 enum mgos_app_init_result mgos_app_init(void) {
-    static RH_NRF905 driver(mgos_sys_config_get_rh_nrf_trx_chip_enable(),
-                     mgos_sys_config_get_rh_nrf_tx_enable(),
-                     SPI.getCSGpio(),
-                     hardware_spi);
+    static RH_CC110 driver(SPI.getCSGpio(),
+                        mgos_sys_config_get_rh_spi_int_gpio(),
+                        false,
+                        hardware_spi);
     static RHReliableDatagram manager(driver, CLIENT_ADDRESS);
 
     if( manager.init() ) {
+        driver.setFrequency(435.0);
+        driver.setTxPower(RH_CC110::TransmitPowerM30dBm);
+        enableInterupt( mgos_sys_config_get_rh_spi_int_gpio() );
         mgos_set_timer(BROADCAST_PERIOD_MS, MGOS_TIMER_REPEAT, tx_broadcast_cb, (void*)&manager);
     }
     else {

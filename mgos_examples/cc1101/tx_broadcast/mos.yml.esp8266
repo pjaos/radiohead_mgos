@@ -21,26 +21,27 @@ sources:
 #  - fs
 
 config_schema:
- #The generic MGOS SPI bus pin connections as defined in deps/spi/mos_esp32.yml
+#The generic MGOS SPI bus pin connections as defined in deps/spi/mos_esp8266.yml
  - ["spi.enable", true]
- - ["spi.unit_no",   "i", 2, {title: "Which SPI unit to use, 2 or 3"}]
- - ["spi.miso_gpio", "i", 19, {title: "GPIO to use for MISO"}]
- - ["spi.mosi_gpio", "i", 23, {title: "GPIO to use for MOSI"}]
- - ["spi.sclk_gpio", "i", 18, {title: "GPIO to use for SCLK"}]
- - ["spi.cs0_gpio",  "i", 5, {title: "GPIO to use for CS0"}]
- #The RadioHead specific SPI config
+ - ["spi.miso_gpio", 12]
+ - ["spi.mosi_gpio", 13]
+ - ["spi.sclk_gpio", 14]
+ - ["spi.cs0_gpio", 5]
+#The RadioHead specific SPI config
  - ["rh_spi",                 "o",             {title: "Holds the RadioHead SPI config."}]
  - ["rh_spi.cs",              "i", 0,          {title: "The RadioHead SPI chip select (0, 1 or 2)."}]
- #The pins specific to NRF chip control
- - ["rh_nrf",                 "o",             {title: "Holds the RadioHead nRF device config."}]
- - ["rh_nrf.trx_chip_enable", "i", 16,         {title: "The TRX_CE pin of the NRF device."}]
- - ["rh_nrf.tx_enable",       "i", 4,          {title: "The TX_EN pin of the NRF device."}]
- #The serial port settings
+ - ["rh_spi_int.gpio",        "i", 4,          {title: "The RadioHead interrupt GPIO pin used when reading data from the device on the SPI bus."}]
+#The serial port settings
  - ["rh_serial",              "o",             {title: "Holds serial port parameters for the RadioHead library to communicate with serial radio device."}]
- - ["rh_serial.baud",         "i", 9600,       {title: "The serial baud rate in bits per second."}]
+ - ["rh_serial.baud",         "i", 115200,     {title: "The serial baud rate in bits per second."}] #!!! Just used for debugging interface as NRF905 has SPI interface
  - ["rh_serial.databits",     "i", 8,          {title: "The serial data bits (5,6,7 or 8)."}]
  - ["rh_serial.parity",       "i", 0,          {title: "The serial parity (0 = None, 1 = Even, 2 = Odd)."}]
  - ["rh_serial.stopbits",     "i", 1,          {title: "The serial stop bits (1 = 1, 2 =2, 3 = 1.5)."}]
+
+#Define the serial port that the radio is connected to.
+cdefs:
+  RH_SERIAL_PORT: 0 #The debug serial port (E.G Serial.println("A message")
+  RH_USE_SPI: 1
 
 libs:
  - origin: https://github.com/mongoose-os-libs/boards
@@ -52,10 +53,5 @@ libs:
  - origin: https://github.com/mongoose-os-libs/adc
  - origin: https://github.com/mongoose-os-libs/pwm
 
-cdefs:
-  RH_SERIAL_PORT: 1      #The debug serial port (E.G Serial.println("A message")
-  NO_ESP32_RXD_PULLUP: 1 #Remove pull up from serial RX data line.
-  RH_USE_SPI: 1
-  
 # Used by the mos tool to catch mos binaries incompatible with this file format
 manifest_version: 2017-09-29
