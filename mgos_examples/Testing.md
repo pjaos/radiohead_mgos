@@ -51,9 +51,32 @@ got request from : 0x01: Hello World!
 ```
 ## Results
 
-For each of the test scenarios below the broadcast and client server
-testing was performed. The definition of a test pass was that the 
-above message sequences occurred.
+The following testing was performed. A test pass was recorded if the 
+above message sequences were displayed on the serial port of the 
+respective device indicating that messages were passed correctly.
+
+At Git hash 3ea3ad13ae58f1c283d732745c62d218639bb6b9 the following testing was performed.
+
+1 serial_port radio device
+ + Broadcast: TX=ESP8266, RX=ESP32 = PASS
+ + Broadcast: TX=ESP32, RX=ESP8266 = PASS
+ + Client Server: Client=ESP8266, Server=ESP32 = PASS
+ + Client Server: Client=ESP32, Server=ESP8266 = PASS
+
+2 nRF905 radio device
+ + Broadcast: TX=ESP8266, RX=ESP32 = PASS
+ + Broadcast: TX=ESP32, RX=ESP8266 = PASS
+ + Client Server: Client=ESP8266, Server=ESP32 = PASS
+ + Client Server: Client=ESP32, Server=ESP8266 = PASS
+
+3 CC1101 radio device
+ + Broadcast: TX=ESP8266, RX=ESP32 = PASS
+ + Broadcast: TX=ESP32, RX=ESP8266 = PASS
+ + Client Server: Client=ESP8266, Server=ESP32 = PASS
+ + Client Server: Client=ESP32, Server=ESP8266 = PASS
+
+
+At Git hash 71dfa28f563061aec9f8b661671569a9c998f88d the following testing was performed.
 
 1 serial_port radio device
  + Broadcast: TX=ESP8266, RX=ESP32 = PASS
