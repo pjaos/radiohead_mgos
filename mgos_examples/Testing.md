@@ -12,6 +12,33 @@ The following testing was performed. A test pass was recorded if the
 above message sequences were displayed on the serial port of the 
 respective device indicating that messages were passed correctly.
 
+
+At Mon Nov 5 05:38:20 2019 the following testing was performed.
+radiohead_mgos.git SHA1: 98441c7b4614dcb18de209a06dd3adee65d155fc
+RadioHead SHA1:          17c4e963a964c8f6839eefa03f20ae626732a09b
+
+1 serial_port radio device
+ + Broadcast: TX=ESP8266, RX=ESP32 = PASS
+ + Broadcast: TX=ESP32, RX=ESP8266 = PASS
+ + Client Server: Client=ESP8266, Server=ESP32 = PASS
+ + Client Server: Client=ESP32, Server=ESP8266 = PASS
+
+2 nRF905 radio device
+ + Broadcast: TX=ESP8266, RX=ESP32 = PASS
+ + Broadcast: TX=ESP32, RX=ESP8266 = PASS
+ + Client Server: Client=ESP8266, Server=ESP32 = PASS
+ + Client Server: Client=ESP32, Server=ESP8266 = PASS
+
+3 CC1101 radio device
+ + Broadcast: TX=ESP8266, RX=ESP32 = PASS
+ + Broadcast: TX=ESP32, RX=ESP8266 = PASS
+ + Client Server: Client=ESP8266, Server=ESP32 = PASS
+ + Client Server: Client=ESP32, Server=ESP8266 = PASS
+ 
+4 - Compile RadioHead/examples using Arduino IDE as defined in the extended test method below.
+PASS
+
+
 At Mon Nov 4 05:24:52 2019 the following testing was performed.
 
 1 serial_port radio device
@@ -124,7 +151,7 @@ got request from : 0x01: Hello World!
 ```
 ## Extended Test Method (3 Nov 2019)
 
-After git hash 3ea3ad13ae58f1c283d732745c62d218639bb6b9 an extra test step was added to check the the modified RadioHead library still compiled under the Arduino IDE.
+After 5 Nov 2-2019 an extra test step was added to check the the modified RadioHead library still compiled under the Arduino IDE.
 
 - Install the Arduino IDE if not already installed.
     - Install xz-utils.
@@ -150,6 +177,8 @@ examples/nrf905/nrf905_reliable_datagram_client/nrf905_reliable_datagram_client.
 examples/nrf905/nrf905_reliable_datagram_server/nrf905_reliable_datagram_server.pde
 examples/cc110/cc110_client/cc110_client.pde
 examples/cc110/cc110_server/cc110_server.pde
+examples/e32/e32_client/e32_client.pde
+examples/e32/e32_server/e32_server.pde
 ```
 
 - Do the same for the following except that when the source file is loaded change the following line (no need to save the file) before pressing Ctrl R. 
